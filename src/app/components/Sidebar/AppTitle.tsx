@@ -11,7 +11,7 @@ export const AppTitle = () => {
                 </div>
                 <div className="flex">
                     <img
-                        src="/images/logo2.png"
+                        src="../../../../images/logo2.png"
                         alt="logo"
                         className="size-9"
                     />
