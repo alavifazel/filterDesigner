@@ -1,17 +1,11 @@
 // import MathJax from 'better-react-mathjax/MathJax'
 import React, { useEffect, useState } from 'react'
 
-export const Equation = ({ filterCoefficients, maxWidth, maxHeight }) => {
-  const [equationToRender, setEquationToRender] = useState('');
+export const Equation = ({ filterCoefficients }) => {
   const [filterEquation, setFilterEquation] = useState('');
 
-  const computePollZeroLocation = (point) => {
-    let omega = Math.atan((point.y - 200) / (point.x - 200)).toFixed(6);
-    return `e^{${omega}j}`;
-  }
-
   const constructFilterEquationString = (filterCoefficients) => {
-    if(filterCoefficients.num.length == 0 && filterCoefficients.den.length == 0) return "Empty";
+    if(filterCoefficients.num.length == 0 && filterCoefficients.den.length == 0) return "y[n] = x[n]";
     let output = "y[n] = ";
     for (let i = 0; i < filterCoefficients.num.length; i++) {
       if (filterCoefficients.num[i] == 1)
@@ -27,12 +21,11 @@ export const Equation = ({ filterCoefficients, maxWidth, maxHeight }) => {
       output += " + ";
     }
 
-    for (let i = 0; i < filterCoefficients.den.length; i++) {
-      if (filterCoefficients.den[i] == 1)
-        output += "y[n]";
+    for (let i = 1; i < filterCoefficients.den.length; i++) {
 
-      else if (filterCoefficients.den[i] != 0) {
-        output += String(Math.abs(Number(filterCoefficients.den[i])).toFixed(2)) + "y[n" + (i != 0 ? "-" + String(i) + "]" : "]")
+
+      if (filterCoefficients.den[i] != 0) {
+        output += String(Math.abs(Number(filterCoefficients.den[i])).toFixed(2)) + "y[n" + ("-" + String(i) + "]" )
       }
       if (i != filterCoefficients.den.length - 1)
         if (filterCoefficients.den[i + 1] > 0)

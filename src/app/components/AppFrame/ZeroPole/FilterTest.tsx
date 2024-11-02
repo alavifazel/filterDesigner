@@ -254,6 +254,7 @@ export const FilterTest = ({ polesAndZeroes, title, trigger, filterCoefficients,
   }
 
   const filter = (signal, filterCoefficients) => {
+    console.log(filterCoefficients)
     const y_buffer = new Array(filterCoefficients.den.length).fill(0);
     let result = [];
 
@@ -311,10 +312,6 @@ export const FilterTest = ({ polesAndZeroes, title, trigger, filterCoefficients,
   }
 
   useEffect(() => {
-      // let tmp = getTheActualPolesAndZeroesNumbersNotTheDotsOnConvas(polesAndZeroes);
-      // let filterCoefficients = calculateFilterCoefficients(constructTransferFunctionNumAndDenPolynomials(tmp));
-      // setFilterCoefficients(filterCoefficients);
-      // updateFilterEquation(constructFilterEquationString(filterCoefficients));
       const generatedSignal = addNoiseChecked ? addSignals(generateSineSignal(100), generateGaussianNoise(100)) : generateSineSignal(100);
       const value = Object.entries(selectedTestSignals).find(([key, value]) => value === true)[0];
       const filteredOutput = filter(generatedSignal, filterCoefficients);
