@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { ZPlane } from './ZPlane'
-import { Equation } from './Equation'
-import { Plot } from './Plot'
-import { FilterTest } from './FilterTest'
+import { Equation } from '../Common/Equation'
+import { Plot } from '../Common/Plot'
+import { FilterTest } from '../Common/FilterTest'
 
 export const ZeroPole = () => {
   const [points, setPoints] = useState([]);
   const [filterEquation, setFilterEquation] = useState('');
-  const [filterCoefficients, setFilterCoefficients] = useState<{ num: any[]; den: any[] }>({ num: [], den: [] });
+  const [filterCoefficients, setFilterCoefficients] = useState<{ num: any[]; den: any[] }>({ num: [1], den: [] });
 
   const [magnitudeResponse, setMagnitudeResponse] = useState({
     xValues: Array.from({ length: 50 }, (_, i) => i / 50 * Math.PI),

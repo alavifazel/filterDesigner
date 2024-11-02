@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useRef } from 'react'
-import { Plot } from './Plot';
+import { Plot } from '../Common/Plot';
 import { add, complex, multiply } from 'mathjs';
 
 export const ZPlane = ({ points, updatePoint, filterCoefficients, updateMagnitudeResponse, updatePhaseResponse, updateFilterCoefficients }) => {
@@ -277,7 +277,7 @@ export const ZPlane = ({ points, updatePoint, filterCoefficients, updateMagnitud
             yValues: Array.from({ length: 50 }, (_, i) => 0)
         });
         setPoleZeroUserEntered('');
-        updateFilterCoefficients({num: [], den: []});
+        updateFilterCoefficients({num: [1], den: []});
     }
 
     const onOptionSelect = (e) => {

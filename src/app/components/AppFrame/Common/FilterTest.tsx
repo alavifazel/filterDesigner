@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2';
-import { add, complex, multiply } from 'mathjs';
 import { ConfigurePopup } from './ConfigurePopup';
 
 export const FilterTest = ({ polesAndZeroes, title, trigger, filterCoefficients, updateFilterEquation }) => {
@@ -36,7 +35,7 @@ export const FilterTest = ({ polesAndZeroes, title, trigger, filterCoefficients,
         plotOutput(addNoiseChecked ? addSignals(generateSquareWaveSignal(100), generateGaussianNoise(100)) : generateSquareWaveSignal(100), filterCoefficients);
         break;
       case "triangle":
-        plotOutput(addNoiseChecked ? addSignals(generateSawToothSignal(100), generateGaussianNoise(100)) : generateSawToothSignal(100), filterCoefficients);
+        plotOutput(addNoiseChecked ? addSignals(generateTriangleSignal(100), generateGaussianNoise(100)) : generateTriangleSignal(100), filterCoefficients);
     }
   }
   const handleAddNoise = () => {
@@ -133,7 +132,7 @@ export const FilterTest = ({ polesAndZeroes, title, trigger, filterCoefficients,
     return output;
   }
 
-  const generateSawToothSignal = (size) => {
+  const generateTriangleSignal = (size) => {
     let output = [];
     let tmp = 0;
     let peak = signalPeak;
@@ -206,8 +205,6 @@ export const FilterTest = ({ polesAndZeroes, title, trigger, filterCoefficients,
 
     return result;
   };
-
-  
 
   const plotOutput = (inputSignal, filterCoefficients) => {
 
