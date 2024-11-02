@@ -59,20 +59,7 @@ export const FilterTest = ({ polesAndZeroes, title, trigger, filterCoefficients,
     })
     plot(value, filterCoefficients, addNoiseChecked);
   };
-
-  const convolve = (a, b) => {
-    let m = a.length + b.length - 1;
-    let result = new Array(m).fill(0);
-    for (let i = 0; i < a.length; i++) {
-      let sum = 0;
-      for (let j = 0; j < b.length; j++) {
-        result[i + j] = add(result[i + j], multiply(a[i], b[j]));
-      }
-    }
-
-    return result;
-  }
-
+  
   const options = {
     scales: {
       x: {
@@ -88,31 +75,6 @@ export const FilterTest = ({ polesAndZeroes, title, trigger, filterCoefficients,
         },
       },
     },
-  }
-
-  const getNormalizedCoordinate = (point) => {
-    return { x: (point.x - 200) / 200, y: (point.y - 200) / 200 };
-  }
-
-  /*
-    Converts the 2D pixel coordinates of the poles and zeros that the user 
-    places on the Z-plane to their actual complex number values on the Z-plane.
-  */
-  const getTheActualPolesAndZeroesNumbersNotTheDotsOnConvas = (x) => {
-    let tmp = x.map(pz => ({ ...pz, point: getNormalizedCoordinate(pz.point) }));
-    return tmp;
-  }
-
-  const constructTransferFunctionNumAndDenPolynomials = (x) => {
-    let num = [];
-    let den = [];
-    for (let i = 0; i < x.length; i++) {
-      if (x[i].poleSelected)
-        den.push([1, complex(-x[i].point.x, -x[i].point.y)]);
-      else
-        num.push([1, complex(-x[i].point.x, -x[i].point.y)]);
-    }
-    return { num: num, den: den };
   }
 
   const [data, setData] = useState(
@@ -216,43 +178,7 @@ export const FilterTest = ({ polesAndZeroes, title, trigger, filterCoefficients,
     return output;
   }
 
-  /*
-  The following function receives the poles and zeroes of a transfer function
-  and returns the IIR filter coefficients associated with the poles and zeroes. 
-  How is this achieved? A transfer function defined by its poles and zeroes has the form:
  
-    ((z - m1)(z - m2)(z - m3)...)/((z - p1)(z - p2)...)
-  
-  where m1, m2, ... are zeroes and p1, p2, p3, ... are poles. To a transfer function expressed 
-  in this form to the 'difference equation' form, we have to multiply the terms in the numerator and denominator 
-  to reach a following that would look like:
-  
-    (2z^(-n) + 2z^(-n-1) + ...)/(1 + z^(-1))
-  
-  The following function does exactly that which multiplies the polynomials using the convolution operation.
-  An idea to speed up this function: Use FFT to compute the convolution! 
-  */
-  const calculateFilterCoefficients = (polynomials) => {
-    let num = [];
-    let den = [];
-
-    let tmp = polynomials.num[0];
-    for (let i = 1; i < polynomials.num.length; i++) {
-      tmp = convolve(tmp, polynomials.num[i]);
-    }
-    num = tmp;
-
-    tmp = polynomials.den[0];
-    for (let i = 1; i < polynomials.den.length; i++) {
-      tmp = convolve(tmp, polynomials.den[i]);
-    }
-    den = tmp;
-
-    if (!num) num = [1];
-    if (!den) den = [0];
-    return { num: num, den: den }
-  }
-
   const filter = (signal, filterCoefficients) => {
     console.log(filterCoefficients)
     const y_buffer = new Array(filterCoefficients.den.length).fill(0);
