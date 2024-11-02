@@ -1,21 +1,19 @@
 // src/Sidebar.js
 import React from 'react';
 
-const items = ["Zero-pole placement"];
 
-export const Sidebar = () => {
-  const [selectedItem, setSelectedItem] = React.useState(items[0]);
-
+export const Sidebar = ({items, selectedItem, updateSelectedItem}) => {
+  
   return (
     <div className="w-64 px-5 py-4 border-r border-slate-200">      
       {items.map((item) => (
         <button
-          key={item}
+          key={item.name}
           className={`flex p-2 text-sm rounded w-full 
-              ${selectedItem === item ? "bg-white hover:bg-gray-100 shadow" : "hover:bg-gray-100"}`}
-          onClick={() => setSelectedItem(item)}
+              ${selectedItem.name === item.name ? "bg-white hover:bg-gray-50 shadow" : "hover:white"}`}
+          onClick={() => updateSelectedItem(item)}
         >
-          <p>{item}</p>
+          <p>{item.placeholder}</p>
         </button>
       ))}
     </div>
