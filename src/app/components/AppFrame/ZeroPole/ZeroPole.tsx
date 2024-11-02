@@ -43,7 +43,7 @@ export const ZeroPole = () => {
         </div>
         <div className="flex flex-col flex-grow">
           <div className="flex items-stretch overflow-hidden">
-            <Equation  filterCoefficients={filterCoefficients} maxWidth={500} maxHeight={500} />
+            <Equation filterCoefficients={filterCoefficients} />
           </div>
           <div className="flex items-stretch overflow-hidden">
             <FilterTest polesAndZeroes={points} title="Phase" trigger={magnitudeResponse} 
