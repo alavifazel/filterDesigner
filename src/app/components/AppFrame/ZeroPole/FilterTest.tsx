@@ -3,10 +3,9 @@ import { Line } from 'react-chartjs-2';
 import { add, complex, multiply } from 'mathjs';
 import { ConfigurePopup } from './ConfigurePopup';
 
-export const FilterTest = ({ polesAndZeroes, title, magnitudeResponse, filterEquation, updateFilterEquation }) => {
+export const FilterTest = ({ polesAndZeroes, title, trigger, filterCoefficients, updateFilterEquation }) => {
   const [filteredOutput, setFilteredOutput] = useState([]);
   const [addNoiseChecked, setAddNoiseChecked] = useState(true);
-  const [filterCoefficients, setFilterCoefficients] = useState<{ num: any[]; den: any[] }>({ num: [], den: [] });
   const [isConfigurePopupOpen, setIsConfigurePopupOpen] = useState(false);
 
   const [noiseMean, setNoiseMean] = useState<number>(1.0);
@@ -281,37 +280,7 @@ export const FilterTest = ({ polesAndZeroes, title, magnitudeResponse, filterEqu
     return result;
   };
 
-  const constructFilterEquationString = (filterCoefficients) => {
-    let output = "y[n] = ";
-    for (let i = 0; i < filterCoefficients.num.length; i++) {
-      if (filterCoefficients.num[i] == 1)
-        output += "x[n]";
-      else output += String(Math.abs(Number(filterCoefficients.num[i])).toFixed(2)) + "x[n" + (i != 0 ? "-" + String(i) + "]" : "]");
-      if (i < filterCoefficients.num.length - 1 && filterCoefficients.num.length > 1)
-        if (filterCoefficients.num[i + 1] > 0)
-          output += " + ";
-        else
-          output += " - ";
-    }
-    if (filterCoefficients.num.length > 0 && (filterCoefficients.den.length > 0 && filterCoefficients.den[1])) {
-      output += " + ";
-    }
-
-    for (let i = 0; i < filterCoefficients.den.length; i++) {
-      if (filterCoefficients.den[i] == 1)
-        output += "y[n]";
-
-      else if (filterCoefficients.den[i] != 0) {
-        output += String(Math.abs(Number(filterCoefficients.den[i])).toFixed(2)) + "y[n" + (i != 0 ? "-" + String(i) + "]" : "]")
-      }
-      if (i != filterCoefficients.den.length - 1)
-        if (filterCoefficients.den[i + 1] > 0)
-          output += " + ";
-        else
-          output += " - ";
-    }
-    return output;
-  }
+  
 
   const plotOutput = (inputSignal, filterCoefficients) => {
 
@@ -342,17 +311,17 @@ export const FilterTest = ({ polesAndZeroes, title, magnitudeResponse, filterEqu
   }
 
   useEffect(() => {
-      let tmp = getTheActualPolesAndZeroesNumbersNotTheDotsOnConvas(polesAndZeroes);
-      let filterCoefficients = calculateFilterCoefficients(constructTransferFunctionNumAndDenPolynomials(tmp));
-      setFilterCoefficients(filterCoefficients);
-      updateFilterEquation(constructFilterEquationString(filterCoefficients));
+      // let tmp = getTheActualPolesAndZeroesNumbersNotTheDotsOnConvas(polesAndZeroes);
+      // let filterCoefficients = calculateFilterCoefficients(constructTransferFunctionNumAndDenPolynomials(tmp));
+      // setFilterCoefficients(filterCoefficients);
+      // updateFilterEquation(constructFilterEquationString(filterCoefficients));
       const generatedSignal = addNoiseChecked ? addSignals(generateSineSignal(100), generateGaussianNoise(100)) : generateSineSignal(100);
       const value = Object.entries(selectedTestSignals).find(([key, value]) => value === true)[0];
       const filteredOutput = filter(generatedSignal, filterCoefficients);
       setFilteredOutput(filteredOutput);
       plot(value, filterCoefficients, addNoiseChecked);
 
-  }, [magnitudeResponse, noiseMean, noiseStandardDeviation, signalPeak]);
+  }, [trigger, noiseMean, noiseStandardDeviation, signalPeak]);
 
 
   return (

@@ -2,14 +2,84 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useRef } from 'react'
 import { Plot } from './Plot';
+import { add, complex, multiply } from 'mathjs';
 
-export const ZPlane = ({ points, updatePoint, updateMagnitudeResponse, updatePhaseResponse }) => {
+export const ZPlane = ({ points, updatePoint, filterCoefficients, updateMagnitudeResponse, updatePhaseResponse, updateFilterCoefficients }) => {
     const canvasRef = useRef(null);
     const [ctx, setCtx] = useState(null);
     const [option, setOption] = useState("graphical")
     const [poleSelected, setPollSelected] = useState(true);
     const [poleZeroOption, setpoleZeroOption] = useState("zero");
     const [poleZeroUserEntered, setPoleZeroUserEntered] = useState("");
+    /*
+      Converts the 2D pixel coordinates of the poles and zeros that the user 
+      places on the Z-plane to their actual complex number values on the Z-plane.
+    */
+    const getTheActualPolesAndZeroesNumbersNotTheDotsOnConvas = (x) => {
+        let tmp = x.map(pz => ({ ...pz, point: getNormalizedCoordinate(pz.point) }));
+        return tmp;
+    }
+
+    /*
+ The following function receives the poles and zeroes of a transfer function
+ and returns the IIR filter coefficients associated with the poles and zeroes. 
+ How is this achieved? A transfer function defined by its poles and zeroes has the form:
+ 
+   ((z - m1)(z - m2)(z - m3)...)/((z - p1)(z - p2)...)
+ 
+ where m1, m2, ... are zeroes and p1, p2, p3, ... are poles. To a transfer function expressed 
+ in this form to the 'difference equation' form, we have to multiply the terms in the numerator and denominator 
+ to reach a following that would look like:
+ 
+   (2z^(-n) + 2z^(-n-1) + ...)/(1 + z^(-1))
+ 
+ The following function does exactly that which multiplies the polynomials using the convolution operation.
+ An idea to speed up this function: Use FFT to compute the convolution! 
+ */
+    const calculateFilterCoefficients = (polynomials) => {
+        let num = [];
+        let den = [];
+
+        let tmp = polynomials.num[0];
+        for (let i = 1; i < polynomials.num.length; i++) {
+            tmp = convolve(tmp, polynomials.num[i]);
+        }
+        num = tmp;
+
+        tmp = polynomials.den[0];
+        for (let i = 1; i < polynomials.den.length; i++) {
+            tmp = convolve(tmp, polynomials.den[i]);
+        }
+        den = tmp;
+
+        if (!num) num = [1];
+        if (!den) den = [0];
+        return { num: num, den: den }
+    }
+    const convolve = (a, b) => {
+        let m = a.length + b.length - 1;
+        let result = new Array(m).fill(0);
+        for (let i = 0; i < a.length; i++) {
+            let sum = 0;
+            for (let j = 0; j < b.length; j++) {
+                result[i + j] = add(result[i + j], multiply(a[i], b[j]));
+            }
+        }
+
+        return result;
+    }
+
+    const constructTransferFunctionNumAndDenPolynomials = (x) => {
+        let num = [];
+        let den = [];
+        for (let i = 0; i < x.length; i++) {
+          if (x[i].poleSelected)
+            den.push([1, complex(-x[i].point.x, -x[i].point.y)]);
+          else
+            num.push([1, complex(-x[i].point.x, -x[i].point.y)]);
+        }
+        return { num: num, den: den };
+      }
 
     const changepoleZeroOption = (e) => {
         setpoleZeroOption(e.target.value);
@@ -19,12 +89,13 @@ export const ZPlane = ({ points, updatePoint, updateMagnitudeResponse, updatePha
         setPoleZeroUserEntered(e.target.value)
     }
 
+
     useEffect(() => {
         const canvas = canvasRef.current;
         if (canvas) {
             const context = canvas.getContext('2d');
             setCtx(context);
-            drawBackground(context); 
+            drawBackground(context);
         }
     }, []);
 
@@ -58,7 +129,7 @@ export const ZPlane = ({ points, updatePoint, updateMagnitudeResponse, updatePha
             ctx.fill();
             ctx.closePath();
         } else {
-            const size = 10; 
+            const size = 10;
             ctx.beginPath();
             ctx.moveTo(x - size, y - size);
             ctx.lineTo(x + size, y + size);
@@ -184,6 +255,11 @@ export const ZPlane = ({ points, updatePoint, updateMagnitudeResponse, updatePha
             yValues.push(num - den);
         }
         updatePhaseResponse({ xValues: xValues, yValues: yValues });
+
+        // Calculate filter coefficients
+        let tmp = getTheActualPolesAndZeroesNumbersNotTheDotsOnConvas(points);
+        let filterCoefficients = calculateFilterCoefficients(constructTransferFunctionNumAndDenPolynomials(tmp));
+        updateFilterCoefficients(filterCoefficients);
     }
 
     const resetSelected = () => {
@@ -201,6 +277,7 @@ export const ZPlane = ({ points, updatePoint, updateMagnitudeResponse, updatePha
             yValues: Array.from({ length: 50 }, (_, i) => 0)
         });
         setPoleZeroUserEntered('');
+        updateFilterCoefficients({num: [], den: []});
     }
 
     const onOptionSelect = (e) => {
@@ -222,7 +299,7 @@ export const ZPlane = ({ points, updatePoint, updateMagnitudeResponse, updatePha
                     onClick={handleCanvasClick}
                     style={{ backgroundColor: '#F8FAFC', border: '1px solid black', cursor: 'crosshair' }}
                 ></canvas>
-                
+
                 <button
                     onClick={() => {
                     }}

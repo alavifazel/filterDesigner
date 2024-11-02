@@ -7,6 +7,7 @@ import { FilterTest } from './FilterTest'
 export const ZeroPole = () => {
   const [points, setPoints] = useState([]);
   const [filterEquation, setFilterEquation] = useState('');
+  const [filterCoefficients, setFilterCoefficients] = useState<{ num: any[]; den: any[] }>({ num: [], den: [] });
 
   const [magnitudeResponse, setMagnitudeResponse] = useState({
     xValues: Array.from({ length: 50 }, (_, i) => i / 50 * Math.PI),
@@ -24,8 +25,10 @@ export const ZeroPole = () => {
         <div className="flex flex-col flex-grow items-center">
           <ZPlane points={points}
             updatePoint={(e) => setPoints(e ? (prev) => [...prev, e] : [])}
-            updateMagnitudeResponse={(e) => setMagnitudeResponse(e ? (prev) => e : null)} 
-            updatePhaseResponse={(e) => setPhaseResponse(e ? (prev) => e : null) }
+            filterCoefficients={filterCoefficients}
+            updateMagnitudeResponse={(e) => setMagnitudeResponse(e ? (_) => e : null)} 
+            updatePhaseResponse={(e) => setPhaseResponse(e ? (_) => e : null) }
+            updateFilterCoefficients={(e) => setFilterCoefficients((_) => e)}
             />
         </div>
 
@@ -40,11 +43,11 @@ export const ZeroPole = () => {
         </div>
         <div className="flex flex-col flex-grow">
           <div className="flex items-stretch overflow-hidden">
-            <Equation filterEquation={filterEquation} maxWidth={500} maxHeight={500} />
+            <Equation  filterCoefficients={filterCoefficients} maxWidth={500} maxHeight={500} />
           </div>
           <div className="flex items-stretch overflow-hidden">
-            <FilterTest polesAndZeroes={points} title="Phase" magnitudeResponse={magnitudeResponse} 
-                        filterEquation={filterEquation} updateFilterEquation={(e) => setFilterEquation(() => e)} />
+            <FilterTest polesAndZeroes={points} title="Phase" trigger={magnitudeResponse} 
+                        filterCoefficients={filterCoefficients} updateFilterEquation={(e) => setFilterEquation(() => e)} />
           </div>
         </div>
       </div>
