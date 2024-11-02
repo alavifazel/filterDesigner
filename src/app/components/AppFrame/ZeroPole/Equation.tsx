@@ -8,7 +8,7 @@ export const Equation = ({ filterCoefficients }) => {
     if(filterCoefficients.num.length == 0 && filterCoefficients.den.length == 0) return "y[n] = x[n]";
     let output = "y[n] = ";
     for (let i = 0; i < filterCoefficients.num.length; i++) {
-      if (filterCoefficients.num[i] == 1)
+      if (filterCoefficients.num.length == 1)
         output += "x[n]";
       else output += String(Math.abs(Number(filterCoefficients.num[i])).toFixed(2)) + "x[n" + (i != 0 ? "-" + String(i) + "]" : "]");
       if (i < filterCoefficients.num.length - 1 && filterCoefficients.num.length > 1)
