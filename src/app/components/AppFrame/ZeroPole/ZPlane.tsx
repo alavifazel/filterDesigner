@@ -280,10 +280,6 @@ export const ZPlane = ({ points, updatePoint, filterCoefficients, updateMagnitud
         updateFilterCoefficients({num: [1], den: []});
     }
 
-    const onOptionSelect = (e) => {
-        setOption(e.target.value)
-    }
-
     return (
         <div className="bg-gray-50 p-2 m-5 rounded-2xl shadow-md">
             <div>

@@ -2,9 +2,12 @@
 import React from 'react';
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { ZeroPole } from './components/AppFrame/ZeroPole/ZeroPole';
+import { FIRFilterDesign } from './components/AppFrame/FIRFilterDesign/FIRFilterDesign';
+
 export default function Home() {
   const items = [
     { placeholder: "Zero-pole placement", name: "zero_pole" },
+    { placeholder: "FIR Design", name: "fir_filter_design" }
   ];
 
   const [selectedItem, setSelectedItem] = React.useState(items[0]);
@@ -15,7 +18,7 @@ export default function Home() {
       case "zero_pole":
         return <ZeroPole />;
       case "fir_filter_design":
-        return null;        
+        return <FIRFilterDesign />;        
 
     }
   }
