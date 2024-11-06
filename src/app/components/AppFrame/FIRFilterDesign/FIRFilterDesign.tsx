@@ -12,7 +12,8 @@ export const FIRFilterDesign = () => {
 
     const [filterSize, setFilterSize] = useState(10);
     const [filterCoefficients, setFilterCoefficients] = useState<{ num: any[]; den: any[] }>({ num: [1], den: [] });
-    const [lowPassCutoff, setLowPassCutoff] = useState(0.5);
+    const [lowCutoff, setLowCutoff] = useState(0.5);
+    const [highCutoff, setHighCutoff] = useState(0.9);
     const [chosenFilterType, setChosenFilterType] = useState(filterType.LOWPASS);
     const [chosenWindowType, setChosenWindowType] = useState(windowType.RECTANGULAR);
 
@@ -30,6 +31,32 @@ export const FIRFilterDesign = () => {
         }
 
         return array;
+    }
+
+    const bandPassImpulseResponse = (w1, w2, N = 1024) => {
+        let array = new Array(N).fill(0);
+        for (let i = 0; i < N; i++) {
+            if (i == N / 2) array[i] = w1 / Math.PI; // TODO: Check whether this is correct
+            else array[i] = 1 / (Math.PI * (i - (N / 2))) * (Math.sin(w1 * (i - N / 2)) - Math.sin(w2 * (i - N / 2)));
+        }
+
+        return array;
+    }
+
+    const getImpulseResponse = (w1, w2, N = 1024) => 
+    {
+        switch(chosenFilterType) {
+            case "Low-pass":
+                return lowPassImpulseResponse(highCutoff, N);
+                break;
+            case "High-pass":
+                console.log("ASd")
+                return bandPassImpulseResponse(Math.PI, lowCutoff, N);
+                break;
+            case "Band-pass":
+                return bandPassImpulseResponse(lowCutoff, highCutoff, N);
+                break;
+        }
     }
 
     const ZeroPad = (array, sizeOfTheZeroPaddedArray) => {
@@ -57,16 +84,16 @@ export const FIRFilterDesign = () => {
         let x = [];
         switch (chosenWindowType) {
             case "Rectangular":
-                x = lowPassImpulseResponse(lowPassCutoff, filterSize)
+                x = getImpulseResponse(lowCutoff, highCutoff, filterSize)
                 break;
             case "Bartlett":
-                x = elementWiseMultiply(lowPassImpulseResponse(lowPassCutoff, filterSize), Bartlett(filterSize))
+                x = elementWiseMultiply(getImpulseResponse(lowCutoff, highCutoff, filterSize), Bartlett(filterSize))
                 break;
             case "Hamming":
-                x = elementWiseMultiply(lowPassImpulseResponse(lowPassCutoff, filterSize), Hamming(filterSize))
+                x = elementWiseMultiply(getImpulseResponse(lowCutoff, highCutoff, filterSize), Hamming(filterSize))
                 break;
             case "Han":
-                x = elementWiseMultiply(lowPassImpulseResponse(lowPassCutoff, filterSize), Han(filterSize))
+                x = elementWiseMultiply(getImpulseResponse(lowCutoff, highCutoff, filterSize), Han(filterSize))
                 break;
         }
         setFilterCoefficients({ num: x, den: [1] });
@@ -95,7 +122,8 @@ export const FIRFilterDesign = () => {
                     chosenFilterType={chosenFilterType} updateChoosenFilterType={(e) => setChosenFilterType(e)}
                     chosenWindowType={chosenWindowType} updateChosenWindowType={(e) => setChosenWindowType(e)}
                     filterSize={filterSize} updateFilterSize={(e) => setFilterSize(e)}
-                    lowPassCutoff={lowPassCutoff} updateLowpassCutoff={(e) => setLowPassCutoff(e)}
+                    lowCutoff={lowCutoff} updateLowCutoff={(e) => setLowCutoff(e)}
+                    highCutoff={highCutoff} updateHighCutoff={(e) => setHighCutoff(e)}
                 />
                 <FilterTest filterCoefficients={filterCoefficients} />
             </div>
