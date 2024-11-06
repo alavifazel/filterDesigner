@@ -23,8 +23,26 @@ export const FilterTest = ({ filterCoefficients }) => {
     "noise": false
   });
 
+  const [data, setData] = useState(
+    {
+      labels: [],
+      datasets: [
+        {
+          label: '',
+          data: [],
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 2,
+          fill: false,
+        },
+      ],
+    }
+  );
+
   const plot = (value, filterCoefficients, addNoiseChecked) => {
     switch (value) {
+      case "no_signal":
+        plotOutput(new Array(100).fill(0), filterCoefficients);
+        break;
       case "sine":
         plotOutput(addNoiseChecked ? addSignals(generateSineSignal(100), generateGaussianNoise(100)) : generateSineSignal(100), filterCoefficients);
         break;
@@ -58,7 +76,7 @@ export const FilterTest = ({ filterCoefficients }) => {
     })
     plot(value, filterCoefficients, addNoiseChecked);
   };
-  
+
   const options = {
     scales: {
       x: {
@@ -76,21 +94,6 @@ export const FilterTest = ({ filterCoefficients }) => {
     },
   }
 
-  const [data, setData] = useState(
-    {
-      labels: [],
-      datasets: [
-        {
-          label: '',
-          data: [],
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 2,
-          fill: false,
-        },
-      ],
-    }
-  );
-
   // Generate Gaussian noise via the Box-Muller method
   const generateGaussianNoise = (size) => {
     let mean = parseFloat(noiseMean.toString()); // I still don't know why this is needed.
@@ -100,7 +103,7 @@ export const FilterTest = ({ filterCoefficients }) => {
       let u1 = Math.random();
       let u2 = Math.random();
       let z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
-      output.push(  mean + z0 * standardDeviation);
+      output.push(mean + z0 * standardDeviation);
     }
     return output;
   }
@@ -141,7 +144,7 @@ export const FilterTest = ({ filterCoefficients }) => {
 
     for (let i = 0; i < size; i++) {
       output.push(tmp);
-    
+
       if (upwardIncrease) {
         tmp += incrementValue;
         if (tmp > peak) {
@@ -177,9 +180,8 @@ export const FilterTest = ({ filterCoefficients }) => {
     return output;
   }
 
- 
+
   const filter = (signal, filterCoefficients) => {
-    console.log(filterCoefficients)
     const y_buffer = new Array(filterCoefficients.den.length).fill(0);
     let result = [];
 
@@ -207,7 +209,6 @@ export const FilterTest = ({ filterCoefficients }) => {
   };
 
   const plotOutput = (inputSignal, filterCoefficients) => {
-
     const filteredOutput = filter(inputSignal, filterCoefficients);
     setFilteredOutput(filteredOutput);
     let inputIndex = Array.from({ length: 100 }, (v, j) => j);
@@ -235,17 +236,22 @@ export const FilterTest = ({ filterCoefficients }) => {
   }
 
   useEffect(() => {
+    if (filterCoefficients.den.length == 0 && filterCoefficients.num.length == 0)
+      plot("no_signal", filterCoefficients, addNoiseChecked);
+    else {
       const generatedSignal = addNoiseChecked ? addSignals(generateSineSignal(100), generateGaussianNoise(100)) : generateSineSignal(100);
       const value = Object.entries(selectedTestSignals).find(([key, value]) => value === true)[0];
       const filteredOutput = filter(generatedSignal, filterCoefficients);
       setFilteredOutput(filteredOutput);
       plot(value, filterCoefficients, addNoiseChecked);
 
+    }
+
   }, [filterCoefficients, noiseMean, noiseStandardDeviation, signalPeak]);
 
 
   return (
-    <div className='bg-gray-50 p-2 m-5 rounded-2xl shadow-md' style={{ height: '475px', width: '515px'}}>
+    <div className='bg-gray-50 p-2 m-5 rounded-2xl shadow-md' style={{ height: '475px', width: '515px' }}>
 
       <Line className="mx-2" data={data} options={options} height={200} />
       <div className="my-4">
@@ -255,15 +261,15 @@ export const FilterTest = ({ filterCoefficients }) => {
           <button value="square" onClick={handleTestSignalSelect} className={`h-10 my-2 text-sm mx-2 px-5 ${selectedTestSignals["square"] ? 'bg-slate-500 text-white' : 'bg-slate-200 text-black'} rounded-lg hover:bg-gray-400`}>Square</button>
           <button value="triangle" onClick={handleTestSignalSelect} className={`h-10 my-2 text-sm mx-2 px-5 ${selectedTestSignals["triangle"] ? 'bg-slate-500 text-white' : 'bg-slate-200 text-black'} rounded-lg hover:bg-gray-400`}>Triangle</button>
           <button value="configure" onClick={toggleConfigurePopup} className={`h-10 my-2 text-sm mx-2 px-5 bg-black text-white rounded-lg hover:bg-gray-800`}>Configure</button>
-          <ConfigurePopup 
+          <ConfigurePopup
             isOpen={isConfigurePopupOpen}
             onClose={toggleConfigurePopup}
             peak={signalPeak}
             noiseMean={noiseMean}
             noiseSd={noiseStandardDeviation}
-            updatePeak={(e) => setSignalPeak((prev) => e )}
-            updateMean={(e) => setNoiseMean((prev) => e )}
-            updateSd={(e) => setNoiseStandardDeviation((prev) => e )}
+            updatePeak={(e) => setSignalPeak((prev) => e)}
+            updateMean={(e) => setNoiseMean((prev) => e)}
+            updateSd={(e) => setNoiseStandardDeviation((prev) => e)}
           />
         </div>
 

@@ -96,7 +96,6 @@ export const FIRFilterDesign = () => {
                     chosenWindowType={chosenWindowType} updateChosenWindowType={(e) => setChosenWindowType(e)}
                     filterSize={filterSize} updateFilterSize={(e) => setFilterSize(e)}
                     lowPassCutoff={lowPassCutoff} updateLowpassCutoff={(e) => setLowPassCutoff(e)}
-
                 />
                 <FilterTest filterCoefficients={filterCoefficients} />
             </div>

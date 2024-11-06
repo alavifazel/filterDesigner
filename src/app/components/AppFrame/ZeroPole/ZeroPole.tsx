@@ -6,8 +6,7 @@ import { FilterTest } from '../Common/FilterTest'
 
 export const ZeroPole = () => {
   const [points, setPoints] = useState([]);
-  const [filterEquation, setFilterEquation] = useState('');
-  const [filterCoefficients, setFilterCoefficients] = useState<{ num: any[]; den: any[] }>({ num: [1], den: [] });
+  const [filterCoefficients, setFilterCoefficients] = useState<{ num: any[]; den: any[] }>({ num: [], den: [] });
 
   const [magnitudeResponse, setMagnitudeResponse] = useState({
     xValues: Array.from({ length: 50 }, (_, i) => i / 50 * Math.PI),

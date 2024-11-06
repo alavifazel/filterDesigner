@@ -277,7 +277,7 @@ export const ZPlane = ({ points, updatePoint, filterCoefficients, updateMagnitud
             yValues: Array.from({ length: 50 }, (_, i) => 0)
         });
         setPoleZeroUserEntered('');
-        updateFilterCoefficients({num: [1], den: []});
+        updateFilterCoefficients({num: [], den: []});
     }
 
     return (
