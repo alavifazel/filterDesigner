@@ -4,11 +4,14 @@ import FFT from 'fft.js';
 import { Hamming, Bartlett, Han } from "./Window"
 import { Panel } from './Panel';
 import { windowType, filterType } from './enums';
+import { FilterTest } from '../Common/FilterTest';
+import { Equation } from './Equation';
 
 export const FIRFilterDesign = () => {
     const [trigger, setTrigger] = useState(false);
 
-    const [filterSize, setFilterSize] = useState(100);
+    const [filterSize, setFilterSize] = useState(10);
+    const [filterCoefficients, setFilterCoefficients] = useState<{ num: any[]; den: any[] }>({ num: [1], den: [] });
     const [lowPassCutoff, setLowPassCutoff] = useState(0.5);
     const [chosenFilterType, setChosenFilterType] = useState(filterType.LOWPASS);
     const [chosenWindowType, setChosenWindowType] = useState(windowType.RECTANGULAR);
@@ -19,15 +22,11 @@ export const FIRFilterDesign = () => {
         yValues: Array.from({ length: 1024 }, (_, i) => 0)
     });
 
-    const sinc = (x) => {
-        return x === 0 ? 1 : Math.sin(x) / x;
-    }
-
     const lowPassImpulseResponse = (cutOffFreq, N = 1024) => {
         let array = new Array(N).fill(0);
         for (let i = 0; i < N; i++) {
-            if(i == N/2) array[i] = cutOffFreq/Math.PI; // TODO: Check whether this is correct
-            else array[i] = 1/(Math.PI*(i-(N/2))) * Math.sin(cutOffFreq*(i - N/2));
+            if (i == N / 2) array[i] = cutOffFreq / Math.PI; // TODO: Check whether this is correct
+            else array[i] = 1 / (Math.PI * (i - (N / 2))) * Math.sin(cutOffFreq * (i - N / 2));
         }
 
         return array;
@@ -56,25 +55,25 @@ export const FIRFilterDesign = () => {
         };
         // const x = Array.from({ length: N }, (_, i) => i > 70 && i < 100 ? 1 : 0 );
         let x = [];
-        switch(chosenWindowType)
-        {
+        switch (chosenWindowType) {
             case "Rectangular":
-                x = ZeroPad(lowPassImpulseResponse(lowPassCutoff, filterSize), N)
+                x = lowPassImpulseResponse(lowPassCutoff, filterSize)
                 break;
             case "Bartlett":
-                x = ZeroPad(elementWiseMultiply(lowPassImpulseResponse(lowPassCutoff, filterSize), Bartlett(filterSize)), N)
+                x = elementWiseMultiply(lowPassImpulseResponse(lowPassCutoff, filterSize), Bartlett(filterSize))
                 break;
             case "Hamming":
-                x = ZeroPad(elementWiseMultiply(lowPassImpulseResponse(lowPassCutoff, filterSize), Hamming(filterSize)), N)
+                x = elementWiseMultiply(lowPassImpulseResponse(lowPassCutoff, filterSize), Hamming(filterSize))
                 break;
             case "Han":
-                x = ZeroPad(elementWiseMultiply(lowPassImpulseResponse(lowPassCutoff, filterSize), Han(filterSize)), N)
+                x = elementWiseMultiply(lowPassImpulseResponse(lowPassCutoff, filterSize), Han(filterSize))
                 break;
         }
+        setFilterCoefficients({ num: x, den: [1] });
 
         const fft = new FFT(N);
         const spectrum = fft.createComplexArray();
-        fft.realTransform(spectrum, x);
+        fft.realTransform(spectrum, ZeroPad(x, N));
 
         const magnitude = new Array(N);
         for (let i = 0; i < N / 2; i++) {
@@ -87,18 +86,24 @@ export const FIRFilterDesign = () => {
     useEffect(() => {
         computeFFT();
     }, [trigger]);
-    
-    return (
-        <div className="flex items-stretch flex-1 bg-grey-100">
-            <Panel 
-                   trigger={trigger} updateTrigger={(e) => setTrigger(e)}
-                   chosenFilterType={chosenFilterType} updateChoosenFilterType={(e) => setChosenFilterType(e)} 
-                   chosenWindowType={chosenWindowType} updateChosenWindowType={(e) => setChosenWindowType(e)} 
-                   filterSize={filterSize} updateFilterSize={(e) => setFilterSize(e)}
-                   lowPassCutoff={lowPassCutoff} updateLowpassCutoff={(e) => setLowPassCutoff(e)}
-                   />
 
+    return (
+        <div className="flex flex-1 items-stretch justify-center">
+            <div className="flex flex-col">
+                <Panel
+                    trigger={trigger} updateTrigger={(e) => setTrigger(e)}
+                    chosenFilterType={chosenFilterType} updateChoosenFilterType={(e) => setChosenFilterType(e)}
+                    chosenWindowType={chosenWindowType} updateChosenWindowType={(e) => setChosenWindowType(e)}
+                    filterSize={filterSize} updateFilterSize={(e) => setFilterSize(e)}
+                    lowPassCutoff={lowPassCutoff} updateLowpassCutoff={(e) => setLowPassCutoff(e)}
+
+                />
+                <FilterTest filterCoefficients={filterCoefficients} />
+            </div>
             <Plot title="Magnitude" x_axis_label="w (rad)" y_axis_label="|H(jw)|" dataToPlot={magnitudeResponse} plotColor={"rgba(75, 192, 192, 1)"} />
+            <Equation filterCoefficients={"[" + filterCoefficients.num.map((x) => String(x.toFixed(4))).join(" ") + "]"} />
+
         </div>
+
     )
 }

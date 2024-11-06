@@ -68,9 +68,7 @@ export const Panel = ({trigger, updateTrigger,
 
             <div className="text-center text-lg pb-4">
                 <button onClick={() => updateTrigger(!trigger)} className={`h-10 my-2 text-sm mx-2 px-6 bg-blue-500 rounded-lg text-white p-2 hover:bg-gray-400`}>Design Filter</button>
-
             </div>
-
         </div >
     )
 }

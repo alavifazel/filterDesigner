@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2';
 import { ConfigurePopup } from './ConfigurePopup';
 
-export const FilterTest = ({ polesAndZeroes, title, trigger, filterCoefficients, updateFilterEquation }) => {
+export const FilterTest = ({ filterCoefficients }) => {
   const [filteredOutput, setFilteredOutput] = useState([]);
   const [addNoiseChecked, setAddNoiseChecked] = useState(true);
   const [isConfigurePopupOpen, setIsConfigurePopupOpen] = useState(false);
@@ -241,7 +241,7 @@ export const FilterTest = ({ polesAndZeroes, title, trigger, filterCoefficients,
       setFilteredOutput(filteredOutput);
       plot(value, filterCoefficients, addNoiseChecked);
 
-  }, [trigger, noiseMean, noiseStandardDeviation, signalPeak]);
+  }, [filterCoefficients, noiseMean, noiseStandardDeviation, signalPeak]);
 
 
   return (
