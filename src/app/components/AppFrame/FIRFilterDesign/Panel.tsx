@@ -70,7 +70,7 @@ export const Panel = ({ trigger, updateTrigger,
                         </button>
                         {windowTypeDropdownIsOpen && (
                             <div className="absolute flex flex-col bg-white p-3 shadow  rounded-lg">
-                                <a className="z-0" id="chooseFilterType" onClick={() => updateChosenWindowType(windowType.RECTANGULAR)} className="my-0.5 w-24 cursor-pointer">Rectangular</a>
+                                <a className="z-0 my-0.5 w-24 cursor-pointer" id="chooseFilterType" onClick={() => updateChosenWindowType(windowType.RECTANGULAR)}>Rectangular</a>
                                 <a id="chooseFilterType" onClick={() => updateChosenWindowType(windowType.HAMMING)} className="my-0.5 w-24 cursor-pointer">Hamming</a>
                                 <a id="chooseFilterType" onClick={() => updateChosenWindowType(windowType.HAN)} className="my-0.5 w-24 cursor-pointer">Han</a>
                                 <a id="chooseFilterType" onClick={() => updateChosenWindowType(windowType.BARTLETT)} className="my-0.5 w-24 cursor-pointer">Bartlett</a>
