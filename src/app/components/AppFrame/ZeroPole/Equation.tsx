@@ -42,7 +42,7 @@ export const Equation = ({ filterCoefficients }) => {
   }, [filterCoefficients]);
 
   return (
-    <div className="overflow-auto bg-gray-50 p-2 m-5 rounded-2xl shadow-md">
+    <div className="overflow-auto bg-gray-50 p-2 my-5 mx-2 rounded-2xl shadow-md">
       <div className="p-4" style={{ height: '150px', width: '500px'}}>
         <div className="font-bold">
           Filter equation:

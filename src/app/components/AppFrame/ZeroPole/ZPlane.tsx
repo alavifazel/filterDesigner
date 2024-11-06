@@ -281,7 +281,7 @@ export const ZPlane = ({ points, updatePoint, filterCoefficients, updateMagnitud
     }
 
     return (
-        <div className="bg-gray-50 p-2 m-5 rounded-2xl shadow-md">
+        <div className="bg-gray-50 p-2 my-5 mx-2 rounded-2xl shadow-md">
             <div>
                 <button onClick={pollSelected} className="h-12 my-2 mx-2 px-7 bg-indigo-700 text-white text-lg rounded-lg hover:bg-blue-800">Pole</button>
                 <button onClick={zeroSelected} className="h-12 my-2 mx-2 px-7 bg-indigo-700 text-white text-lg rounded-lg hover:bg-blue-800">Zero</button>

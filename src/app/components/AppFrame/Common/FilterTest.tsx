@@ -251,7 +251,7 @@ export const FilterTest = ({ filterCoefficients }) => {
 
 
   return (
-    <div className='bg-gray-50 p-2 m-5 rounded-2xl shadow-md' style={{ height: '475px', width: '515px' }}>
+    <div className='bg-gray-50 p-2 my-5 mx-2 rounded-2xl shadow-md' style={{ height: '475px', width: '515px' }}>
 
       <Line className="mx-2" data={data} options={options} height={200} />
       <div className="my-4">

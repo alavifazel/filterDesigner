@@ -15,7 +15,7 @@ export const Panel = ({trigger, updateTrigger,
     const toggleWindowTypeDropdown = () => setWindowTypeDropdownIsOpen(!windowTypeDropdownIsOpen);
 
     return (
-        <div className="flex flex-col justify-between h-screen h-48 bg-gray-50 p-2 m-5 rounded-2xl shadow-md" style={{ height: '320px', width: '500px' }}>
+        <div className="flex flex-col justify-between h-screen h-48 bg-gray-50 p-2 my-5 mx-2 rounded-2xl shadow-md" style={{ height: '322px', width: '515px' }}>
 
             <div className="m-4">
                 <div id="content">

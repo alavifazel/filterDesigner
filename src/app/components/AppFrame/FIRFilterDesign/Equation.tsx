@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Equation = ({ filterCoefficients }) => {
   return (
-    <div className="flex flex-col justify-between h-screen bg-gray-50 p-2 m-5 rounded-2xl shadow-md p-5 overflow-auto" style={{ height: '320px', width: '500px' }}>
+    <div className="flex flex-col justify-between h-screen bg-gray-50 p-2 mx-2 my-5 rounded-2xl shadow-md p-5 overflow-auto" style={{ height: '320px', width: '500px' }}>
 
       <div>
         <p className="text-lg text-gray-900 font-bold my-5">Filter Coefficients:</p>

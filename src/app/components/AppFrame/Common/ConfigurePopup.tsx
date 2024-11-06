@@ -22,7 +22,7 @@ export const ConfigurePopup = ({ isOpen, onClose, peak, noiseMean, noiseSd, upda
     
     if (!isOpen) return null;
     return (
-        <div className="fixed">
+        <>
             <div className="bg-white p-5 rounded shadow-lg">
                 <label>
                     Peak: <input onChange={(e) => setLocalPeak(e.target.value)} type="number" autoComplete="off" className="shadow-sm m-2 p-1" name="peak" value={localPeak} />
@@ -37,6 +37,6 @@ export const ConfigurePopup = ({ isOpen, onClose, peak, noiseMean, noiseSd, upda
                 </label>      
                 <button className="h-10 my-2 mx-2 px-7 bg-indigo-700 text-white text-sm rounded-lg hover:bg-blue-800" onClick={handleSet}>Set</button>
             </div>
-        </div>
+        </>
     )
 }
