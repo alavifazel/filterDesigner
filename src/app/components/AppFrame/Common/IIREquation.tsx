@@ -1,7 +1,7 @@
 // import MathJax from 'better-react-mathjax/MathJax'
 import React, { useEffect, useState } from 'react'
 
-export const Equation = ({ filterCoefficients }) => {
+export const IIREquation = ({ filterCoefficients }) => {
   const [filterEquation, setFilterEquation] = useState('');
 
   const constructFilterEquationString = (filterCoefficients) => {
@@ -37,12 +37,11 @@ export const Equation = ({ filterCoefficients }) => {
   }
 
   useEffect(() => {
-    console.log(filterCoefficients)
       if(filterCoefficients) setFilterEquation(() => constructFilterEquationString(filterCoefficients));
   }, [filterCoefficients]);
 
   return (
-    <div className="overflow-auto bg-gray-50 p-2 my-5 mx-2 rounded-2xl shadow-md">
+    <div className="overflow-x-scroll bg-gray-50 p-2 my-5 mx-2 rounded-2xl shadow-md" style={{ height: '168px'}}>
       <div className="p-4" style={{ height: '150px', width: '500px'}}>
         <div className="font-bold">
           Filter equation:

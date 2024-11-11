@@ -5,7 +5,8 @@ import { Hamming, Bartlett, Han } from "./Window"
 import { Panel } from './Panel';
 import { windowType, filterType } from './enums';
 import { FilterTest } from '../Common/FilterTest';
-import { Equation } from './Equation';
+import { Equation } from '../Common/Equation';
+import { ZeroPad } from '../Common/Utils';
 
 export const FIRFilterDesign = () => {
     const [trigger, setTrigger] = useState(false);
@@ -50,7 +51,6 @@ export const FIRFilterDesign = () => {
                 return lowPassImpulseResponse(highCutoff, N);
                 break;
             case "High-pass":
-                console.log("ASd")
                 return bandPassImpulseResponse(Math.PI, lowCutoff, N);
                 break;
             case "Band-pass":
@@ -59,11 +59,6 @@ export const FIRFilterDesign = () => {
         }
     }
 
-    const ZeroPad = (array, sizeOfTheZeroPaddedArray) => {
-        console.assert(array.length < sizeOfTheZeroPaddedArray);
-        let theRestOfTheZeroPaddedArray = new Array(sizeOfTheZeroPaddedArray - array.length).fill(0);
-        return array.concat(theRestOfTheZeroPaddedArray);
-    }
 
     const elementWiseMultiply = (arr1, arr2) => {
         console.assert(arr1.length == arr2.length);
@@ -80,7 +75,6 @@ export const FIRFilterDesign = () => {
             xValues: Array.from({ length: N / 2 }, (_, i) => i / N * 2 * Math.PI),
             yValues: Array.from({ length: N / 2 }, (_, i) => 0)
         };
-        // const x = Array.from({ length: N }, (_, i) => i > 70 && i < 100 ? 1 : 0 );
         let x = [];
         switch (chosenWindowType) {
             case "Rectangular":
@@ -101,7 +95,8 @@ export const FIRFilterDesign = () => {
         const fft = new FFT(N);
         const spectrum = fft.createComplexArray();
         fft.realTransform(spectrum, ZeroPad(x, N));
-
+        
+        // Compute magnitude of freq. response
         const magnitude = new Array(N);
         for (let i = 0; i < N / 2; i++) {
             magnitude[i] = Math.sqrt(Math.pow(spectrum[i * 2], 2) + Math.pow(spectrum[i * 2 + 1], 2));

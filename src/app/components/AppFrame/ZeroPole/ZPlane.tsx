@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useRef } from 'react'
 import { Plot } from '../Common/Plot';
-import { add, complex, multiply } from 'mathjs';
+import { complex } from 'mathjs';
+import { convolve } from '../Common/Utils';
 
-export const ZPlane = ({ points, updatePoint, filterCoefficients, updateMagnitudeResponse, updatePhaseResponse, updateFilterCoefficients }) => {
+export const ZPlane = ({ points, updatePoint, updateMagnitudeResponse, updatePhaseResponse, updateFilterCoefficients }) => {
     const canvasRef = useRef(null);
     const [ctx, setCtx] = useState(null);
-    const [option, setOption] = useState("graphical")
     const [poleSelected, setPollSelected] = useState(true);
     const [poleZeroOption, setpoleZeroOption] = useState("zero");
     const [poleZeroUserEntered, setPoleZeroUserEntered] = useState("");
@@ -56,18 +56,7 @@ export const ZPlane = ({ points, updatePoint, filterCoefficients, updateMagnitud
         if (!den) den = [0];
         return { num: num, den: den }
     }
-    const convolve = (a, b) => {
-        let m = a.length + b.length - 1;
-        let result = new Array(m).fill(0);
-        for (let i = 0; i < a.length; i++) {
-            let sum = 0;
-            for (let j = 0; j < b.length; j++) {
-                result[i + j] = add(result[i + j], multiply(a[i], b[j]));
-            }
-        }
 
-        return result;
-    }
 
     const constructTransferFunctionNumAndDenPolynomials = (x) => {
         let num = [];

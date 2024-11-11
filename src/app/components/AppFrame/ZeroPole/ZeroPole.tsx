@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ZPlane } from './ZPlane'
-import { Equation } from './Equation'
+import { IIREquation } from '../Common/IIREquation'
 import { Plot } from '../Common/Plot'
 import { FilterTest } from '../Common/FilterTest'
 
@@ -25,7 +25,6 @@ export const ZeroPole = () => {
           <ZPlane
             points={points}
             updatePoint={(e) => setPoints(e ? (prev) => [...prev, e] : [])}
-            filterCoefficients={filterCoefficients}
             updateMagnitudeResponse={(e) => setMagnitudeResponse(e ? (_) => e : null)}
             updatePhaseResponse={(e) => setPhaseResponse(e ? (_) => e : null)}
             updateFilterCoefficients={(e) => setFilterCoefficients((_) => e)}
@@ -50,7 +49,7 @@ export const ZeroPole = () => {
         </div>
 
         <div className="flex flex-col">
-          <Equation filterCoefficients={filterCoefficients} />
+          <IIREquation filterCoefficients={filterCoefficients} />
           <FilterTest filterCoefficients={filterCoefficients} />
         </div>
       </div>
