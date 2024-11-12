@@ -27,7 +27,7 @@ export const ZPlane = ({ points, updatePoint, updateMagnitudeResponse, updatePha
  
    ((z - m1)(z - m2)(z - m3)...)/((z - p1)(z - p2)...)
  
- where m1, m2, ... are zeroes and p1, p2, p3, ... are poles. To a transfer function expressed 
+ where m1, m2, ... are zeroes and p1, p2, p3, ... are the poles. To convert a transfer function expressed 
  in this form to the 'difference equation' form, we have to multiply the terms in the numerator and denominator 
  to reach a following that would look like:
  

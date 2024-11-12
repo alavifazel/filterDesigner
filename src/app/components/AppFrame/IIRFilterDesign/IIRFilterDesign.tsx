@@ -204,7 +204,6 @@ export const IIRFilterDesign = () => {
                     dataToPlot={magnitudeResponse}
                     plotColor={"rgba(75, 192, 192, 1)"} />
                 <IIREquation filterCoefficients={filterCoefficients} />
-
             </div>
 
             <Plot

@@ -60,7 +60,7 @@ export const Plot = ({ title, x_axis_label, y_axis_label, dataToPlot, plotColor 
   }, [dataToPlot]);
 
   return (
-    <div className="bg-gray-50 p-2 m-5 rounded-2xl shadow-md" style={{ height: '321px', width: 'calc(300px * 16 / 9)', position: 'relative' }}>
+    <div className="bg-gray-50 p-2 my-5 mx-1 rounded-2xl shadow-md" style={{ height: '321px', width: 'calc(300px * 16 / 9)', position: 'relative' }}>
       <Line data={data} options={options} width={380} height={230} />
     </div>
   );
