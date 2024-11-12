@@ -41,7 +41,7 @@ export const IIREquation = ({ filterCoefficients }) => {
   }, [filterCoefficients]);
 
   return (
-    <div className="overflow-x-scroll bg-gray-50 p-2 my-5 mx-2 rounded-2xl shadow-md" style={{ height: '168px'}}>
+    <div className="overflow-x-scroll bg-gray-50 p-2 my-5 mx-2 rounded-2xl shadow-md" style={{ height: '168px', width: '550px'}}>
       <div className="p-4" style={{ height: '150px', width: '500px'}}>
         <div className="font-bold">
           Filter equation:

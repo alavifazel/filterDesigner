@@ -1,5 +1,11 @@
 # FilterDesigner
-A web app for designing digital filters by visually placing poles and zeros on a Z-plane. Current features:
+A web app for designing and visualizing [digital filters](https://en.wikipedia.org/wiki/Digital_filter).
+In the current version, a filter can be designed via:
+- Visually placing poles and zeros on a Z-plane.
+- FIR design using Windowing method.
+- IIR design using Butterworth method.
+
+Afterwards, the web app:
 - Computes the the magnitude and phase of the filter’s frequency response
 - Generates the filter coefficients
 - Visualizes the filter's output on a various input signals

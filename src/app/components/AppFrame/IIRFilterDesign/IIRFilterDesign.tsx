@@ -196,12 +196,17 @@ export const IIRFilterDesign = () => {
                 />
                 <FilterTest filterCoefficients={filterCoefficients} />
             </div>
-            <Plot
-                title="Magnitude"
-                x_axis_label="w (rad)"
-                y_axis_label="|H(jw)|"
-                dataToPlot={magnitudeResponse}
-                plotColor={"rgba(75, 192, 192, 1)"} />
+            <div className="flex flex-col">
+                <Plot
+                    title="Magnitude"
+                    x_axis_label="w (rad)"
+                    y_axis_label="|H(jw)|"
+                    dataToPlot={magnitudeResponse}
+                    plotColor={"rgba(75, 192, 192, 1)"} />
+                <IIREquation filterCoefficients={filterCoefficients} />
+
+            </div>
+
             <Plot
                 title="Phase"
                 x_axis_label="w (rad)"
@@ -210,7 +215,6 @@ export const IIRFilterDesign = () => {
                 plotColor={"rgba(200, 130, 35, 1)"}
             />
 
-            <IIREquation filterCoefficients={filterCoefficients} />
 
         </div>
 
