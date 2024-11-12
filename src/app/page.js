@@ -25,7 +25,8 @@ export default function Home() {
         return <IIRFilterDesign />;
       case "help":
         return (
-          <div className="m-10 bg-white rounded-lg shadow w-full h-64 p-5">
+          <div className="m-10 bg-white rounded-lg shadow w-full p-5">
+            <br></br>
             <p>
               Filter Designer is an opensource web app for designing and visualizing digital filters.
             </p>

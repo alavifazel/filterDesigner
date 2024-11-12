@@ -213,8 +213,6 @@ export const IIRFilterDesign = () => {
                 dataToPlot={phaseResponse}
                 plotColor={"rgba(200, 130, 35, 1)"}
             />
-
-
         </div>
 
     )
