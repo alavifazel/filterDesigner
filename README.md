@@ -30,9 +30,9 @@ npm run dev
 ```
 - The app should become accessible on 'http://localhost:3000' or on a similar port.
 
-## Demo
+<!-- ## Demo
 The following video shows the design of a low-pass filter:
-![](https://raw.githubusercontent.com/alavifazel/demo/refs/heads/main/animation-smaller.gif)
+![](https://raw.githubusercontent.com/alavifazel/demo/refs/heads/main/animation-smaller.gif) -->
 
 ## License
 The software is released under Apache License 2.0. View the LICENSE file for more info.
