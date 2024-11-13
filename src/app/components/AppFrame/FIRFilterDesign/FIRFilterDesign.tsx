@@ -30,7 +30,6 @@ export const FIRFilterDesign = () => {
             if (i == N / 2) array[i] = cutOffFreq / Math.PI; // TODO: Check whether this is correct
             else array[i] = 1 / (Math.PI * (i - (N / 2))) * Math.sin(cutOffFreq * (i - N / 2));
         }
-
         return array;
     }
 
@@ -58,7 +57,6 @@ export const FIRFilterDesign = () => {
                 break;
         }
     }
-
 
     const elementWiseMultiply = (arr1, arr2) => {
         console.assert(arr1.length == arr2.length);

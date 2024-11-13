@@ -325,7 +325,7 @@ export const ZPlane = ({ points, updatePoint, updateMagnitudeResponse, updatePha
             </div>
 
             <div className="flex">
-                <button onClick={generateResponse} className="flex-grow h-12 my-2 mx-2 px-7 bg-indigo-700 text-white text-lg rounded-lg hover:bg-blue-800">Frequency Response</button>
+                <button onClick={generateResponse} className="flex-grow h-12 my-2 mx-2 px-7 bg-indigo-700 text-white text-lg rounded-lg hover:bg-blue-800">Design Filter</button>
             </div>
         </div>
     )

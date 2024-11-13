@@ -38,7 +38,6 @@ export default function Home() {
             </p>
             <br></br>
             <p><a className="text-blue-600" href="https://github.com/alavifazel/filterDesigner">GitHub.com/alavifazel/filterDesigner</a></p>
-
             <br></br>
             <p>Version: 0.2 </p>
           </div >
