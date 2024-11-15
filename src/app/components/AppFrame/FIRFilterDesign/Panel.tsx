@@ -32,6 +32,7 @@ export const Panel = ({ trigger, updateTrigger,
                                     <a id="chooseFilterType" onClick={() => updateChoosenFilterType(filterType.LOWPASS)} className="my-0.5 w-24 cursor-pointer">Low-pass</a>
                                     <a id="chooseFilterType" onClick={() => updateChoosenFilterType(filterType.HIGHPASS)} className="my-0.5 w-24 cursor-pointer">High-pass</a>
                                     <a id="chooseFilterType" onClick={() => updateChoosenFilterType(filterType.BANDPASS)} className="my-0.5 w-24 cursor-pointer">Band-pass</a>
+                                    <a id="chooseFilterType" onClick={() => updateChoosenFilterType(filterType.BANDSTOP)} className="my-0.5 w-24 cursor-pointer">Band-stop</a>
                                 </div>
                             )}
                         </div>
@@ -53,6 +54,16 @@ export const Panel = ({ trigger, updateTrigger,
                 }
 
                 {chosenFilterType == "Band-pass" &&
+                    <div className="mt-3">
+                        <label>Low freq:</label>
+                        <input className="rounded-lg shadow p-1 my-3 w-32 mx-1 mr-5" onChange={(e) => updateLowCutoff(Number(e.target.value))} value={lowCutoff} placeholder="Rad/Samples" type="number" step="0.01" max="3.14" min="0"></input>
+                        <label>High freq:</label>
+                        <input className="rounded-lg shadow p-1 my-3 w-32 mx-1" onChange={(e) => updateHighCutoff(Number(e.target.value))} value={highCutoff} placeholder="Rad/Samples" type="number" step="0.01" max="3.14" min="0"></input>
+
+                    </div>
+                }
+
+                {chosenFilterType == "Band-stop" &&
                     <div className="mt-3">
                         <label>Low freq:</label>
                         <input className="rounded-lg shadow p-1 my-3 w-32 mx-1 mr-5" onChange={(e) => updateLowCutoff(Number(e.target.value))} value={lowCutoff} placeholder="Rad/Samples" type="number" step="0.01" max="3.14" min="0"></input>

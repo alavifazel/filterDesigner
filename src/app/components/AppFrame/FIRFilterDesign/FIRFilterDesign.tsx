@@ -43,19 +43,36 @@ export const FIRFilterDesign = () => {
         return array;
     }
 
-    const getImpulseResponse = (w1, w2, N = 1024) => 
-    {
-        switch(chosenFilterType) {
+    const bandStopImpulseResponse = (w1, w2, N = 1024) => {
+        let array = new Array(N).fill(0);
+        for (let i = 0; i < N; i++) {
+            if (i == N / 2) array[i] = w2 / Math.PI; // TODO: Check whether this is correct
+            else array[i] = 1 / (Math.PI * (i - (N / 2))) * (Math.sin(Math.PI * (i - N / 2)) - Math.sin(w2 * (i - N / 2)));
+        }
+        console.log("AA")
+
+        return array;
+    }
+
+    const getImpulseResponse = (w1, w2, N = 1024) => {
+        switch (chosenFilterType) {
             case "Low-pass":
                 return lowPassImpulseResponse(highCutoff, N);
-                break;
             case "High-pass":
                 return bandPassImpulseResponse(Math.PI, lowCutoff, N);
-                break;
             case "Band-pass":
                 return bandPassImpulseResponse(lowCutoff, highCutoff, N);
-                break;
+            case "Band-stop":
+                return elementWiseAdd(bandPassImpulseResponse(Math.PI, highCutoff, N), lowPassImpulseResponse(lowCutoff, N));
         }
+    }
+    const elementWiseAdd = (arr1, arr2) => {
+        console.assert(arr1.length == arr2.length);
+        let res = new Array(arr1.length);
+        for (let i = 0; i < arr1.length; i++) {
+            res[i] = arr1[i] + arr2[i];
+        }
+        return res;
     }
 
     const elementWiseMultiply = (arr1, arr2) => {
@@ -93,7 +110,7 @@ export const FIRFilterDesign = () => {
         const fft = new FFT(N);
         const spectrum = fft.createComplexArray();
         fft.realTransform(spectrum, ZeroPad(x, N));
-        
+
         // Compute magnitude of freq. response
         const magnitude = new Array(N);
         for (let i = 0; i < N / 2; i++) {
