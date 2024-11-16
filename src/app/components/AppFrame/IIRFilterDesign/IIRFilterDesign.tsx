@@ -3,7 +3,7 @@ import { Plot } from '../Common/Plot'
 import { Panel } from './Panel';
 import { FilterTest } from '../Common/FilterTest';
 import { IIREquation } from '../Common/IIREquation';
-import { bilinearTransform, convolve, getCausalButterworthPoles, getImpulseResponse, H_of_s, ZeroPad } from '../Common/Utils';
+import { bilinearTransform, getCausalButterworthPoles, getImpulseResponse, H_of_s, ZeroPad } from '../Common/Utils';
 import FFT from 'fft.js';
 import { filterType, IIRfilterDesignMethod } from '../Common/enums';
 

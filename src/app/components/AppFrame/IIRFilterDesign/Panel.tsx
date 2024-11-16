@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { filterDesignMethod, filterType } from './enums';
+import { filterType, IIRfilterDesignMethod } from '../Common/enums';
 
 export const Panel = ({ trigger, updateTrigger,
     chosenFilterType, updateChoosenFilterType,
@@ -47,7 +47,7 @@ export const Panel = ({ trigger, updateTrigger,
                         </button>
                         {windowTypeDropdownIsOpen && (
                             <div className="absolute flex flex-col bg-white p-3 shadow  rounded-lg">
-                                <a className="z-0 my-0.5 w-24 cursor-pointer" onClick={() => updateChosenMethod(filterDesignMethod.BUTTERWORTH)}>Butterworth</a>
+                                <a className="z-0 my-0.5 w-24 cursor-pointer" onClick={() => updateChosenMethod(IIRfilterDesignMethod.BUTTERWORTH)}>Butterworth</a>
                                 {/* <a id="chooseFilterType" onClick={() => updateChosenWindowType(windowType.BARTLETT)} className="my-0.5 w-24 cursor-pointer">Bartlett</a> */}
                             </div>
                         )}
