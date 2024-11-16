@@ -81,8 +81,6 @@ export const Panel = ({ trigger, updateTrigger,
                     <label>Filter Order:</label>
                     <input className="rounded-lg shadow p-1 my-2 w-32 mx-1" onChange={(e) => updateFilterOrder(Number(e.target.value))} value={filterOrder} placeholder="Number" type="number" min="1"></input>
                 </div>
-
-
             </div>
 
             <div className="text-center text-lg pb-4">
