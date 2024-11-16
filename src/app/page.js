@@ -10,7 +10,6 @@ export default function Home() {
     { placeholder: "Zero-pole placement", name: "zero_pole" },
     { placeholder: "FIR Design", name: "fir_filter_design" },
     { placeholder: "IIR Design", name: "iir_filter_design" },
-    { placeholder: "> Interactive Prompt", name: "prompt" },
     { placeholder: "Help?", name: "help" }
   ];
 
