@@ -30,6 +30,7 @@ export const Panel = ({ trigger, updateTrigger,
                             {fitlerTypeDropdownIsOpen && (
                                 <div className="absolute flex flex-col bg-white p-3 shadow  rounded-lg z-10">
                                     <a id="chooseFilterType" onClick={() => updateChoosenFilterType(filterType.LOWPASS)} className="my-0.5 w-24 cursor-pointer">Low-pass</a>
+                                    <a id="chooseFilterType" onClick={() => updateChoosenFilterType(filterType.HIGHPASS)} className="my-0.5 w-24 cursor-pointer">High-pass</a>
                                     {/* <a id="chooseFilterType" onClick={() => updateChoosenFilterType(filterType.HIGHPASS)} className="my-0.5 w-24 cursor-pointer">High-pass</a>
                                     <a id="chooseFilterType" onClick={() => updateChoosenFilterType(filterType.BANDPASS)} className="my-0.5 w-24 cursor-pointer">Band-pass</a> */}
                                 </div>
@@ -55,7 +56,7 @@ export const Panel = ({ trigger, updateTrigger,
                 {chosenFilterType == "Low-pass" &&
                     <div className="mt-2">
                         <label>Cuttoff Freq:</label>
-                        <input className="rounded-lg shadow p-1 my-3 w-32 mx-1" onChange={(e) => updateHighCutoff(Number(e.target.value))} value={highCutoff} placeholder="Rad/Samples" type="number" step="0.01" max="3.14" min="0"></input>
+                        <input className="rounded-lg shadow p-1 my-3 w-32 mx-1" onChange={(e) => updateLowCutoff(Number(e.target.value))} value={lowCutoff} placeholder="Rad/Samples" type="number" step="0.01" max="3.14" min="0"></input>
                     </div>
                 }
 

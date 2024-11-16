@@ -1,12 +1,11 @@
 // src/Sidebar.js
 import React from 'react';
 
-
 export const Sidebar = ({ items, selectedItem, updateSelectedItem }) => {
   return (
     <div className="flex flex-col px-5 py-4 border-r border-slate-200">
       {items.map((item) =>
-        item.name == "help" ?
+        item.name == "prompt" ?
           (
             <div className="mt-auto">
               <button
