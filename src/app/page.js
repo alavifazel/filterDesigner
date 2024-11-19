@@ -4,12 +4,14 @@ import { Sidebar } from "./components/Sidebar/Sidebar";
 import { ZeroPole } from './components/AppFrame/ZeroPole/ZeroPole';
 import { FIRFilterDesign } from './components/AppFrame/FIRFilterDesign/FIRFilterDesign';
 import { IIRFilterDesign } from './components/AppFrame/IIRFilterDesign/IIRFilterDesign';
+import { Prompt } from './components/AppFrame/Prompt/Prompt';
 
 export default function Home() {
   const items = [
     { placeholder: "Zero-pole placement", name: "zero_pole" },
     { placeholder: "FIR Design", name: "fir_filter_design" },
     { placeholder: "IIR Design", name: "iir_filter_design" },
+    { placeholder: "> Interactive Prompt", name: "prompt" },
     { placeholder: "Help?", name: "help" }
   ];
 
@@ -23,10 +25,11 @@ export default function Home() {
         return <FIRFilterDesign />;
       case "iir_filter_design":
         return <IIRFilterDesign />;
-
+      case "prompt":
+        return <Prompt />;
       case "help":
         return (
-          <div >
+          <div className="bg-white rounded-lg shadow w-full p-5">
             <br></br>
             <p>
               Filter Designer is an opensource web app for designing and visualizing digital filters.

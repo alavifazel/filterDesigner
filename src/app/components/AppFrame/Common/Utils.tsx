@@ -173,3 +173,7 @@ export const H_of_s = (poles, Omega_c, type) => {
             return transformAnalogLowpassToHighpass(tf, poles.length, Omega_c, Omega_c);
     }
 }
+
+export const countNumberOfOccurrences = (str, c) => {
+    return str.split(c).length-1;
+}
