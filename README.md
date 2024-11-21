@@ -11,7 +11,7 @@ After designing a fitler, the web app:
 - Visualizes the filter's output on a various input signals
 
 ## Getting Started
-To use the app, simply visit [dsptoolkit.github.io/webapp/](dsptoolkit.github.io/webapp/).
+To use the app, simply visit [dsptoolkit.github.io/webapp/](https://dsptoolkit.github.io/webapp/).
 Alternatively, to install and run the app locally, make sure you have a recent version of [Node](https://nodejs.org/en) installed.
 Afterwards:
 
