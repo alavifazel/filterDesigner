@@ -1,4 +1,4 @@
-# FilterDesigner
+# DSPToolkit Web App
 A web app for designing and visualizing [digital filters](https://en.wikipedia.org/wiki/Digital_filter).
 In the current version, a filter can be designed via:
 - Visually placing poles and zeros on a Z-plane.
@@ -11,13 +11,13 @@ After designing a fitler, the web app:
 - Visualizes the filter's output on a various input signals
 
 ## Getting Started
-To use the app, simply visit [https://alavifazel.github.io/filterDesigner](https://alavifazel.github.io/filterDesigner).
+To use the app, simply visit [https://github.com/DSPToolkit/webapp](https://alavifazel.github.io/filterDesigner).
 Alternatively, to install and run the app locally, make sure you have a recent version of [Node](https://nodejs.org/en) installed.
 Afterwards:
 
 - Clone the repository:
 ```shell
-git clone https://github.com/alavifazel/filterDesigner
+git clone git@github.com:DSPToolkit/webapp.git
 cd filterDesigner
 ```
 - Install the dependencies:

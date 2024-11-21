@@ -32,7 +32,7 @@ export default function Home() {
           <div className="bg-white rounded-lg shadow w-full p-5">
             <br></br>
             <p>
-              Filter Designer is an opensource web app for designing and visualizing digital filters.
+              DSPToolkit is an opensource web app for designing and visualizing digital filters.
             </p>
             <p>
               Features include designing filters by placing <b>poles and zeroes on the Z-plane</b>, FIR filter design using <b>windowing method</b> and IIR design using <b>Butterworth</b> method.
@@ -41,7 +41,7 @@ export default function Home() {
               For additional information regarding the project visit:
             </p>
             <br></br>
-            <p><a className="text-blue-600" href="https://github.com/alavifazel/filterDesigner">GitHub.com/alavifazel/filterDesigner</a></p>
+            <p><a className="text-blue-600" href="https://github.com/DSPToolkit/webapp">GitHub.com/DSPToolkit/webapp</a></p>
             <br></br>
             <p>Version: 0.2 </p>
           </div >
