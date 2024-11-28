@@ -30,6 +30,10 @@ npm run dev
 ```
 - The app should become accessible on 'http://localhost:3000' or on a similar port.
 
+
+## Demo:
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/v-J_UCnyTLk/0.jpg)](https://www.youtube.com/watch?v=v-J_UCnyTLk)
+
 <!-- ## Demo
 The following video shows the design of a low-pass filter:
 ![](https://raw.githubusercontent.com/alavifazel/demo/refs/heads/main/animation-smaller.gif) -->
